@@ -1,5 +1,4 @@
 # Getting Started with the EWS Managed API
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/OfficeDev/ews-managed-api?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The Exchange Web Services (EWS) Managed API provides a managed interface for developing .NET client applications that use EWS.
 By using the EWS Managed API, you can access almost all the information stored in an Office 365, Exchange Online, or Exchange Server mailbox.
@@ -27,7 +26,7 @@ In addition to the getting started links provided, you can find how to topics an
 You need the following to work with the EWS Managed API:
 - A C# compiler to build the DLL files. We recommend Visual Studio 2013.
 - A mailbox on Office 365 or an Exchange server that is running Exchange Online or a version of Exchange starting with Exchange Server 2007.
-- A version of the .NET Framework starting with the .NET Framework 3.5.
+- A version of the .NET Framework starting with the .NET Framework 4.5.
 
 ## Additional resources
 

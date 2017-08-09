@@ -176,7 +176,7 @@ namespace Microsoft.Exchange.WebServices.Data
         /// Parses the responses.
         /// </summary>
         /// <param name="state">The state.</param>
-        private void ParseResponses(object state)
+        private async void ParseResponses(object state)
         {
             try
             {
@@ -209,7 +209,7 @@ namespace Microsoft.Exchange.WebServices.Data
                             {
                                 try
                                 {
-                                    responseObject = this.ReadResponse(ewsXmlReader, this.response.Headers);
+                                    responseObject = await this.ReadResponseAsync(ewsXmlReader, this.response.Headers, CancellationToken.None);
                                 }
                                 finally
                                 {
@@ -223,7 +223,7 @@ namespace Microsoft.Exchange.WebServices.Data
                             }
                             else
                             {
-                                responseObject = this.ReadResponse(ewsXmlReader, this.response.Headers);
+                                responseObject = await this.ReadResponseAsync(ewsXmlReader, this.response.Headers, CancellationToken.None);
                             }
 
                             this.responseHandler(responseObject);
@@ -339,8 +339,7 @@ namespace Microsoft.Exchange.WebServices.Data
                     TraceFlags.EwsResponseHttpHeaders,
                     this.response);
 
-                ThreadPool.QueueUserWorkItem(
-                    new WaitCallback(this.ParseResponses));
+                System.Threading.Tasks.Task.Run(() => this.ParseResponses(null));
             }
         }
 
@@ -368,6 +367,16 @@ namespace Microsoft.Exchange.WebServices.Data
         protected override void ReadPreamble(EwsServiceXmlReader ewsXmlReader)
         {
             // Do nothing.
+        }
+
+        /// <summary>
+        /// Reads any preamble data not part of the core response.
+        /// </summary>
+        /// <param name="ewsXmlReader">The EwsServiceXmlReader.</param>
+        protected override System.Threading.Tasks.Task ReadPreambleAsync(EwsServiceXmlReader ewsXmlReader, CancellationToken token)
+        {
+            // For .NET Framework 4.6+ use: Task.CompletedTask
+            return System.Threading.Tasks.Task.Delay(0);
         }
     }
 }
